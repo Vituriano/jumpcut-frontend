@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import uploadImg from "./logo.png";
 import './index.css';
 import axios from 'axios';
+import FileSaver from 'file-saver';
+
 
 function App() {
   const requestStatus = {
@@ -28,6 +30,7 @@ function App() {
       );
 
       console.log(response);
+      FileSaver.saveAs(response.data, 'downloaded_video.mp4');
       setVideoRequestStatus(requestStatus.SUCCESS);
     } catch (error) {
       setVideoRequestStatus(requestStatus.FAILED);
