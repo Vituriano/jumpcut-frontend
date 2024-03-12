@@ -71,8 +71,8 @@ function App() {
       );
       const videoId  = response.data;
 
-      const silenceObjects = getSilenceObject(videoId);
-      handleJumpCut(silenceObjects, videoId);
+      const silenceObjects = await getSilenceObject(videoId);
+      await handleJumpCut(silenceObjects, videoId);
     } catch (error) {
       setVideoRequestStatus(requestStatus.FAILED);
       console.error('Error uploading video:', error);
