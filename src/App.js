@@ -23,7 +23,7 @@ function App() {
     setVideoRequestStatus(requestStatus.LOADING);
     try {
       const response = await axios.post(
-        'http://localhost:8080/videos',
+        'https://jumpcut-backend-0db4a198d22d.herokuapp.com/videos',
         formData,
         {
           headers: {
