@@ -15,6 +15,7 @@ function App() {
 
   const handleJumpCut = async (jumpCutData, videoId) => {
     try {
+      console.log(jumpCutData)
       const response = await axios.patch(
         `https://jumpcut-backend-0db4a198d22d.herokuapp.com/videos/${videoId}/jump-cut`,
         jumpCutData,
@@ -46,8 +47,6 @@ function App() {
       return response.data;
     } catch (error) {
       setVideoRequestStatus(requestStatus.FAILED);
-    } finally {
-      setVideoRequestStatus(requestStatus.SUCCESS);
     }
   };
 
