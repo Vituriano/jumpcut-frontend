@@ -13,6 +13,44 @@ function App() {
 
   const [videoRequestStatus, setVideoRequestStatus] = useState(requestStatus.IDLE);
 
+  const handleJumpCut = async (jumpCutData, videoId) => {
+    try {
+      const response = await axios.patch(
+        `https://jumpcut-backend-0db4a198d22d.herokuapp.com/videos/${videoId}/jump-cut`,
+        jumpCutData,
+        {
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      console.log(response);
+      setVideoRequestStatus(requestStatus.SUCCESS);
+    } catch (error) {
+      setVideoRequestStatus(requestStatus.FAILED);
+    }
+  };
+
+  const getSilenceObject = async (videoId) => {
+    try {
+      const response = await axios.get(
+        `https://jumpcut-backend-0db4a198d22d.herokuapp.com/videos/${videoId}/detect-silence`,
+        {
+          headers: {
+            'accept': 'application/json'
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      setVideoRequestStatus(requestStatus.FAILED);
+    } finally {
+      setVideoRequestStatus(requestStatus.SUCCESS);
+    }
+  };
+
   const handleUpload = async (event) => {
     event.preventDefault();
 
@@ -32,8 +70,10 @@ function App() {
           }
         }
       );
-      setVideoRequestStatus(requestStatus.SUCCESS);
-      console.log(response.data); // Handle the response
+      const videoId  = response.data;
+
+      const silenceObjects = getSilenceObject(videoId);
+      handleJumpCut(silenceObjects, videoId);
     } catch (error) {
       setVideoRequestStatus(requestStatus.FAILED);
       console.error('Error uploading video:', error);
