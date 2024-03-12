@@ -1,7 +1,7 @@
 {
   "name": "jumpcut-frontend",
   "version": "0.1.0",
-    "engines": {
+  "engines": {
     "node": "20.x"
   },
   "private": true,
